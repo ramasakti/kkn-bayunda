@@ -1,77 +1,77 @@
-@extends('layouts/template')
+@extends('layouts.template')
 
 @section('content')
+<body>
 <div class="pagetitle">
-      <h1>Data Set</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/home">Home</a></li>
-          <li class="breadcrumb-item active">Data Set</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-<section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+  <h1>Dataset</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/home">Home</a></li>
+      <li class="breadcrumb-item active">Data Ranting</li>
+    </ol>
+  </nav>
+</div>
+<!-- End Page Title -->
+    
+        <div class="col-xl-12">
 
           <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Datatables</h5>
+          <div class="card-body">
+              
+          @include('dataset.create')
+            
               <!-- Table with stripped rows -->
               <table class="table datatable">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
+                    <th scope="col">NO</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Tempat Lahir</th>
+                    <th scope="col">Tanggal Lahir</th>
+                    <th scope="col">Jabatan</th>
+                    <th scope="col">NBM</th>
+                    <th scope="col">Pekerjaan</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
+                @php $no = 1; @endphp
+                
+                  @foreach($dataset as $data)
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
+                    <th scope="col">{{$no++}}</th>
+                    <td>{{$data->nama}}</td>
+                    <td>{{$data->tempat_lahir}}</td>
+                    <td>{{$data->tanggal_lahir}}</td>
+                    <td>{{$data->jabatan}}</td>
+                    <td>{{$data->NBM}}</td>
+                    <td>{{$data->pekerjaan}}</td>
+                    <td>
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <a class="nav-link collapsed" href="{{url('dataset/'.$data->id.'/edit')}}">
+                            <button type="button" class="btn btn-warning">
+                              Edit
+                            </button>
+                            </a>
+                        </div>
+                        <div class="col">
+                        <form onsubmit="return confirm('Yakin akan menghapus data?')" class='d-inline' action="{{ url('delete/'.$data->id) }}" method="get">
+                        @csrf 
+                        <button type="submit" name="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                  </tr>
+                  @endforeach
+                  
                 </tbody>
+                
               </table>
-              <!-- End Table with stripped rows -->
+              <!-- First Table -->
 
             </div>
           </div>
-
-        </div>
-      </div>
-    </section>
+  </body>
 @endsection
